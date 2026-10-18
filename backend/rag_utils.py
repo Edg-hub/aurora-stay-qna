@@ -34,7 +34,8 @@ def generate(query, retrieved_chunks,model) -> str:
     7. Do not include unrelated or noisy information from the retrieved policy information.
     8. Answer the user's specific question directly and ensure the response addresses what was asked.
     9. Keep the answer concise, clear, and easy to understand.
-    10. If the information is insufficient or if none of the retrieved chunks match the query's specific property, say:
+    10. Do not invent benefits, exclusions, limits, waiting periods, conditions, or coverage details.
+    11. If the information is insufficient or if none of the retrieved chunks match the query's specific property, say:
         "The available policy documents do not contain enough information to answer this question."
         If the retrieved information conflicts, clearly mention the conflict.
 
