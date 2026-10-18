@@ -7,7 +7,7 @@ def retrieve(query: str, k: int = 2,vectorstore=None) -> list[str]:
     results = vectorstore.similarity_search(query, k=k)
 
     # Return each chunk with its content and metadata
-    return [ 
+    return [
         f"Content:\n{r.page_content}\n\nMetadata:\n{r.metadata}"
         for r in results
     ]
@@ -16,7 +16,7 @@ def retrieve(query: str, k: int = 2,vectorstore=None) -> list[str]:
 def generate(query, retrieved_chunks,model) -> str:
 
     prompt = f"""
-    You are an AI assistant answering questions about hotel policies for AuroraStay.
+    You are an AI assistant answering questions about hotel policies.
 
     User Query:
     {query}
@@ -26,16 +26,15 @@ def generate(query, retrieved_chunks,model) -> str:
 
     Rules:
     1. Use only information explicitly supported by the retrieved policy information.
-    2. Strict Context Filtering: Carefully ignore any retrieved chunks, tables, or property rules that do not match the specific hotel property, location, or subject mentioned in the User Query.
-    3. Do not use outside knowledge, assumptions, or information not present in the retrieved policy information.
-    4. Include all relevant information needed to answer the query completely.
-    5. Do not omit important conditions, exclusions, limitations, exceptions, or coverage details.
-    6. Focus only on information directly relevant to the user's query.
-    7. Do not include unrelated or noisy information from the retrieved policy information.
-    8. Answer the user's specific question directly and ensure the response addresses what was asked.
-    9. Keep the answer concise, clear, and easy to understand.
-    10. Do not invent benefits, exclusions, limits, waiting periods, conditions, or coverage details.
-    11. If the information is insufficient or if none of the retrieved chunks match the query's specific property, say:
+    2. Do not use outside knowledge, assumptions, or information not present in the retrieved policy information.
+    3. Include all relevant information needed to answer the query completely.
+    4. Do not omit important conditions, exclusions, limitations, exceptions, or coverage details.
+    5. Focus only on information directly relevant to the user's query.
+    6. Do not include unrelated information from the retrieved policy information.
+    7. Answer the user's specific question directly and ensure the response addresses what was asked.
+    8. Keep the answer concise, clear, and easy to understand.
+    9. Do not invent benefits, exclusions, limits, waiting periods, conditions, or coverage details.
+    10. If the information is insufficient, say:
         "The available policy documents do not contain enough information to answer this question."
         If the retrieved information conflicts, clearly mention the conflict.
 
